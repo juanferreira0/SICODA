@@ -1,0 +1,162 @@
+<?php
+require_once("config.php");
+$ruta = 'Upload/';
+$alert = 0;
+
+$data = array(); // Inicializa un array para almacenar los datos
+$x=0;
+foreach ($_FILES as $key) {
+    $nombre = $key["name"];
+    $ruta_temporal = $key["tmp_name"];
+    $fecha = getdate();
+    $nombre_v = $fecha["mday"] . "-" . $fecha["mon"] . "-" . $fecha["year"] . "_" . $fecha["hours"] . "-" . $fecha["minutes"] . "-" . $fecha["seconds"] . ".csv";
+    $destino = $ruta . $nombre_v;
+
+    if (move_uploaded_file($ruta_temporal, $destino)) {
+        $alert = 2;
+    }
+
+    $fichero = fopen($destino, "r");
+    
+    // Procesa el archivo CSV mientras lo abres
+    while (($datos = fgetcsv($fichero, 1000)) !== FALSE) {
+        $x++; 
+        if ($x > 1) {
+            // Agrega los datos a un array en lugar de sobrescribir $data
+            $data[] = '(' . $datos[0] . ',' . $datos[1] . ',' . $datos[2] . ',' . $datos[3] . ',' . $datos[4] . ',' . $datos[5] . ',' . $datos[6] . ',' . $datos[7] . ',' . $datos[8] . ',' . $datos[9] . ',' . $datos[10] . ')';
+        }
+    }
+    
+    fclose($fichero); // Cierra el archivo CSV después de procesarlo
+}
+
+print_r($data); // Imprime todos los datos del archivo CSV
+?>
+
+
+
+
+
+
+
+
+
+
+
+ '$nombre',
+			'$CI',
+            '$fecha',
+            '$hora',
+            '$enfuera',
+            '$readid',
+            '$eventmain',
+            '$eventsub',
+            '$asistencia',
+            '$serialNo',
+            '$orden'
+
+
+
+
+
+<?php
+require_once("config.php");
+$ruta = 'Upload/';
+$alert = 0;
+$x=0;
+
+foreach ($_FILES as $key) {
+    $nombre = $key["name"];
+    $ruta_temporal = $key["tmp_name"];
+    $fecha = getdate();
+    $nombre_v = $fecha["mday"] . "-" . $fecha["mon"] . "-" . $fecha["year"] . "_" . $fecha["hours"] . "-" . $fecha["minutes"] . "-" . $fecha["seconds"] . ".csv";
+    $destino = $ruta . $nombre_v;
+
+    if (move_uploaded_file($ruta_temporal, $destino)) {
+        $alert = 2;
+    }
+
+    $fichero = fopen($destino, "r");
+
+    
+    // Procesa el archivo CSV mientras lo abres
+    while (($datos = fgetcsv($fichero, 1000)) !== FALSE) {
+        $x++;
+        if ($x > 1) {
+            // Suponiendo que tienes una tabla llamada "mi_tabla" con columnas adecuadas
+            $sql_insert = "INSERT INTO reportes (nombre,CI,card,fecha,hora,en,readid,eventmain,eventsub,attendance,serialNo) 
+                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            
+            $stmt = $con->prepare($sql_insert);
+            $stmt->bind_param("sssssssssss", $datos[0], $datos[1], $datos[2], $datos[3], $datos[4],$datos[5], $datos[6], $datos[7], $datos[8], $datos[9],$datos[10]);
+            
+            if ($stmt->execute()) {
+                echo "Registro insertado correctamente.<br>";
+            } else {
+                echo "Error al insertar registro: " . $stmt->error . "<br>";
+            }
+        }
+    }
+
+    fclose($fichero); // Cierra el archivo CSV después de procesarlo
+}
+
+?>
+
+
+
+
+
+<?php
+require_once("config.php");
+$ruta = 'Upload/';
+$alert = 0;
+$x=0;
+
+$cant_doble = 0;
+
+foreach ($_FILES as $key) {
+    $nombre = $key["name"];
+    $ruta_temporal = $key["tmp_name"];
+    $fecha = getdate();
+    $nombre_v = $fecha["mday"] . "-" . $fecha["mon"] . "-" . $fecha["year"] . "_" . $fecha["hours"] . "-" . $fecha["minutes"] . "-" . $fecha["seconds"] . ".csv";
+    $destino = $ruta . $nombre_v;
+
+    if (move_uploaded_file($ruta_temporal, $destino)) {
+        $alert = 2;
+    }
+
+    
+    $fichero = fopen($destino, "r");   
+       
+        
+    while (($datos = fgetcsv($fichero, 1000)) !== FALSE) {
+        $x++;
+        if ($x > 1) {
+            
+            $sql_insert = "INSERT IGNORE INTO reportes (nombre,CI,card,fecha,hora,en,readid,eventmain,eventsub,attendance,serialNo) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            
+            $stmt = $con->prepare($sql_insert);
+            $stmt->bind_param("sssssssssss", $datos[0], $datos[1], $datos[2], $datos[3], $datos[4],$datos[5], $datos[6], $datos[7], $datos[8], $datos[9],$datos[10]);
+            
+            if ($stmt->execute()) {
+                echo "Registro insertado correctamente.<br>";
+            } else {
+                echo "Error al insertar registro: " . $stmt->error . "<br>";
+            }
+        }
+    }
+        
+    
+
+    
+    fclose($fichero);
+
+}
+
+
+
+?>
+
+<a href="page.html">Conrinuar</a>

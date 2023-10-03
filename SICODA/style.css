@@ -1,0 +1,21 @@
+
+div {
+width:43.75rem;
+height:26.25rem;
+background:white;
+top:50%;
+left:50%;
+position:absolute;
+transform:translate(-50%,-50%);
+box-sizing:border-box;
+padding-left:40px;
+border-radius:1.5%;
+box-shadow: 2px 10px 15px 1px #000 ;
+transition: 0.6s all ease;
+}
+
+div:hover{
+    width:46.75rem;
+    height:28.25rem;
+    box-shadow: 3px 15px 20px 1px #000 ;
+}

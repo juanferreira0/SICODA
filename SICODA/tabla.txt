@@ -1,0 +1,46 @@
+CREATE DATABASES asistencias;
+
+CREATE TABLE reportes (
+    nombre varchar(50) NOT NULL,
+    CI varchar(50) NOT NULL,
+    card varchar(50) NOT NULL,
+    fecha date NOT NULL,
+    hora varchar(50) NOT NULL,
+    en varchar(50) NOT NULL,
+    readid varchar(50) NOT NULL,
+    eventmain varchar(50) NOT NULL,
+    eventsub varchar(50) NOT NULL,
+    attendance varchar(50) NOT NULL,
+    serialNo varchar(50) NOT NULL,
+    a int PRIMARY KEY AUTO_INCREMENT
+);
+
+CREATE TABLE cuentas (
+    id int(11) NOT NULL,
+    nombre varchar(50) NOT NULL,
+    contraseña varchar(50) NOT NULL
+);
+
+
+CREATE TABLE alumnos(
+    CI	varchar(50) PRIMARY KEY NOT NULL ,
+    nombre	varchar(50) NOT NULL,
+    apellido varchar(50) NOT NULL,
+    curso varchar(50) NOT NULL
+)
+
+
+    <link rel="stylesheet" href="datatables/datatables/datatables.min.css">
+	<link rel="stylesheet" href="datatables/datatables/DataTables-1.13.6/css/dataTables.bootstrap4.min.css">
+
+
+
+
+    <script src="datatables/JQuery/jquery.js"></script>
+	<script src="datatables/popper.js"></script>
+	<script src="datatables/bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="datatables/datatables/datatables.min.js"></script>
+	<script type="text/javascript" src="datatables/main.js"></script>
+
+
